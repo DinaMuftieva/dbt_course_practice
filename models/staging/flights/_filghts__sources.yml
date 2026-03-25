@@ -1,0 +1,60 @@
+sources:
+    - name: demo_src
+      description: Flights DB
+      database: dwh_flights
+      schema: demo_src
+      tables:
+        - name: aircrafts
+          description: '{{ doc("aircrafts_description")}}'
+          columns:
+            - name: aircraft_code
+              description: >
+                Aircraft code str1
+                Aircraft code str2
+                Aircraft code str3
+              tests:
+                - not_null
+                - unique
+            - name: model
+              description: >
+                # Aircraft model str1
+                ## Aircraft model str2
+            - name: range
+              description: Some range
+        - name: airports
+          description: "**Airports model**"
+          columns:
+            - name: airport_code
+              description: Airport code
+            - name: airport_name
+              description: Airport name
+            - name: city
+              description: Airport city
+            - name: coordinates
+              description: Airport coordinate
+            - name: timezone
+              description: Airport timezone
+        - name: seats
+          description: Aircraft seats model
+          columns:
+            - name: aircraft_code
+              description: Aircraft code
+            - name: seat_no
+              description: Number of seats
+            - name: fare_conditions
+              description: Seat class
+        - name: bookings
+          description: Ticket bookings
+          columns:
+            - name: book_ref
+            - name: book_date
+            - name: total_amount
+          freshness: 
+            warn_after:
+              count: 600000
+              period: hour
+            error_after:
+              count: 10000
+              period: day
+            filter: current_timestamp::date - book_date::date < 30000
+          loaded_at_field: book_date::timestamp
