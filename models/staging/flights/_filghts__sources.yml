@@ -58,3 +58,30 @@ sources:
               period: day
             filter: current_timestamp::date - book_date::date < 30000
           loaded_at_field: book_date::timestamp
+        - name: boarding_passes
+          description: Boaring passes
+          columns:
+            - name: ticket_no
+            - name: flight_id
+            - name: boarding_no
+            - name: seat_no
+        - name: flights
+          description: Flights
+          columns:
+            - name: flight_id
+            - name: flight_no
+            - name: scheduled_departure
+            - name: scheduled_arrival
+            - name: departure_airport
+            - name: arrival_airport
+            - name: status
+            - name: aircraft_code
+            - name: actual_departure
+            - name: actual_arrival
+        - name: ticket_flights
+          description: Ticket flights
+          columns:
+            - name: ticket_no
+            - name: flight_id
+            - name: fare_conditions
+            - name: amount
