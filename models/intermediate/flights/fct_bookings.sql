@@ -1,6 +1,6 @@
 {{
   config(
-    materialized = 'table',
+    materialized = 'table'
     )
 }}
 select
@@ -9,3 +9,4 @@ select
     total_amount
 from
     {{ ref('stg_flights__bookings') }}
+
