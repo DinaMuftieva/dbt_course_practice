@@ -1,0 +1,47 @@
+models:
+    - name: fct_bookings
+      descriprion: Fact bookings
+      docs:
+        show: true
+        node_color: red #цвет в схеме в документации
+      latest_version: 1 #для согласованной межкомандной работы
+      versions: #потом конкретные версии можно указывать в ref при обращении к модели
+        - v: 1
+      #deprecation_date: предупрждение о устаревании модели
+
+      #access: private - можно использовать внутри одной папки с моделями
+      #OR
+      #access: protected - можно использовать внутри проекта dbt
+      #OR
+      #access: public - в dbt cloud можно использовать модели из соседнего проекта dbt
+
+      #constraints: #если проверка констрейнта не пройдена, то модель не обновится
+      #обязательно должен быть указан контракт (указание колонок и типов из данных в yml файле модели) для использования констрейнт 
+      #работают только для тех типов материализации, когда данные сохраняются в бд: table / incremental
+      # not null, unique, pk, fk, check
+      # можно указать на уровне модели или на уровне колонки
+      config:
+        contract: {enforced: true}
+      meta: #инфа для документации
+        owner: "DinaGainetdinova"
+        contact_tg: DinaGainetdinova
+        status: in_dev
+      columns:
+        - name: book_ref
+          data_type: varchar(8)
+          constraints:
+            - type: not_null
+        - name: book_date
+          data_type: timestamptz
+        - name: total_amount
+          data_type: numeric(10,2)
+          constraints:
+            - type: check
+              expression: total_amount > 0
+          tests: #test: #модель сначала обновляется, потом проверяется тест. если проверка теста не пройдена, то мы получаем сообщение о том, что тест провален
+            - not_null
+          meta: #инфа для документации
+            owner: finance_team
+          #quote: true #надо ли обрамлять запрос ковычками
+      
+
