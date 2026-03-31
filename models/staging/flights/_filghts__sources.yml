@@ -26,6 +26,8 @@ sources:
           columns:
             - name: airport_code
               description: Airport code
+              tests: 
+                - dbt_utils.not_empty_string
             - name: airport_name
               description: Airport name
             - name: city

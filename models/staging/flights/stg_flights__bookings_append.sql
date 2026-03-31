@@ -8,7 +8,7 @@
 select
   book_ref,
   book_date,
-  total_amount
+  {{ curr_conv('total_amount') }} as total_amount
 from {{ source('demo_src', 'bookings') }}
 
 {% if is_incremental() %}
